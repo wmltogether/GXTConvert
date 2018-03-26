@@ -97,7 +97,31 @@ namespace GXTConvert.FileFormat
             for (int i = 0; i < TextureInfos.Length; i++)
             {
                 TextureBundle bundle = (TextureBundles[i] = new TextureBundle(reader, Header, TextureInfos[i]));
-                Textures[i] = bundle.CreateTexture(FetchPalette(bundle.TextureFormat, bundle.PaletteIndex));
+                if (bundle.TextureFormat == SceGxmTextureFormat.UBC1 || bundle.TextureFormat == SceGxmTextureFormat.UBC2 || bundle.TextureFormat == SceGxmTextureFormat.UBC3)
+                {
+                    Textures[i] = bundle.CreateTexture(FetchPalette(bundle.TextureFormat, bundle.PaletteIndex));
+                }
+                else if (bundle.TextureFormat == SceGxmTextureFormat.PVRT2BPP ||
+                    bundle.TextureFormat == SceGxmTextureFormat.PVRT2BPP_1BGR ||
+                    bundle.TextureFormat == SceGxmTextureFormat.PVRT2BPP_ABGR ||
+                    bundle.TextureFormat == SceGxmTextureFormat.PVRT4BPP ||
+                    bundle.TextureFormat == SceGxmTextureFormat.PVRT4BPP_1BGR ||
+                    bundle.TextureFormat == SceGxmTextureFormat.PVRT4BPP_ABGR ||
+                    bundle.TextureFormat == SceGxmTextureFormat.PVRTII2BPP ||
+                    bundle.TextureFormat == SceGxmTextureFormat.PVRTII2BPP_1BGR ||
+                    bundle.TextureFormat == SceGxmTextureFormat.PVRTII2BPP_ABGR ||
+                    bundle.TextureFormat == SceGxmTextureFormat.PVRTII4BPP ||
+                    bundle.TextureFormat == SceGxmTextureFormat.PVRTII4BPP_1BGR ||
+                    bundle.TextureFormat == SceGxmTextureFormat.PVRTII4BPP_ABGR
+                    )
+                {
+                    Textures[i] = bundle.CreateTexture(FetchPalette(bundle.TextureFormat, bundle.PaletteIndex));
+                }
+                else
+                {
+                    Textures[i] = bundle.CreateTextureForRGBA();
+                    
+                }
             }
         }
 

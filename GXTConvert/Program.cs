@@ -147,8 +147,8 @@ namespace GXTConvert
                 IndentWriteLine();
                 IndentWriteLine("Operation completed in {0}.", GetReadableTimespan(stopwatch.Elapsed));
                 IndentWriteLine();
-                IndentWriteLine("Press any key to exit.");
-                Console.ReadKey();
+                //IndentWriteLine("Press any key to exit.");
+                //Console.ReadKey();
             }
         }
 
@@ -181,7 +181,7 @@ namespace GXTConvert
 
                     for (int i = 0; i < gxtInstance.TextureInfos.Length; i++)
                     {
-                        string outputFilename = string.Format("{0} (Texture {1}).png", Path.GetFileNameWithoutExtension(inputFile.Name), i);
+                        string outputFilename = string.Format("{0}_idx{1}.png", Path.GetFileNameWithoutExtension(inputFile.Name), i);
                         FileInfo outputFile = new FileInfo(Path.Combine(outputDir.FullName, relativeDirectory, outputFilename));
 
                         SceGxtTextureInfo info = gxtInstance.TextureInfos[i];
@@ -200,7 +200,7 @@ namespace GXTConvert
                         indent++;
                         for (int i = 0; i < gxtInstance.BUVTextures.Length; i++)
                         {
-                            string outputFilename = string.Format("{0} (Block {1}).png", Path.GetFileNameWithoutExtension(inputFile.Name), i);
+                            string outputFilename = string.Format("{0}_buv{1}.png", Path.GetFileNameWithoutExtension(inputFile.Name), i);
                             FileInfo outputFile = new FileInfo(Path.Combine(outputDir.FullName, relativeDirectory, outputFilename));
 
                             BUVEntry entry = gxtInstance.BUVChunk.Entries[i];

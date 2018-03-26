@@ -80,6 +80,31 @@ namespace GXTConvert.Conversion
             }
         }
 
+        public Bitmap CreateTextureForRGBA()
+        {
+            //@TODO: There's no need to fit round width for RGBA lieaner textures.So, just copy bitmap data.
+            //Special Fix for 5PB この世の果てで恋を唄う少女YU-NO 
+            Bitmap texture = new Bitmap(Width, Height, PixelFormat);
+            BitmapData bmpData = texture.LockBits(new Rectangle(0, 0, texture.Width, texture.Height), ImageLockMode.ReadWrite, texture.PixelFormat);
+            byte[] pixelsForBmp = new byte[bmpData.Height * bmpData.Stride];
+            int bytesPerPixel = (Bitmap.GetPixelFormatSize(PixelFormat) / 8);
+            for (int y = 0; y < bmpData.Height; y++)
+            {
+                int srcOffset = y * (bmpData.Width * bytesPerPixel);
+                int dstOffset = y * bmpData.Stride;
+                Buffer.BlockCopy(PixelData, srcOffset, pixelsForBmp, dstOffset, (bmpData.Width * bytesPerPixel));
+            }
+            Marshal.Copy(pixelsForBmp, 0, bmpData.Scan0, pixelsForBmp.Length);
+            texture.UnlockBits(bmpData);
+            Bitmap realTexture = new Bitmap(Width, Height);
+            using (Graphics g = Graphics.FromImage(realTexture))
+            {
+                g.DrawImageUnscaled(texture, 0, 0);
+            }
+
+            return realTexture;
+        }
+
         public Bitmap CreateTexture(Color[] palette = null)
         {
             Bitmap texture = new Bitmap(RoundedWidth, RoundedHeight, PixelFormat);
