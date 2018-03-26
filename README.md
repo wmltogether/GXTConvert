@@ -41,6 +41,7 @@ Games known to use the GXT format include:
 * Soul Sacrifice Delta _(*.gxt)_ <sup>(5)</sup>
 * Toro's Friend Network _(*.gxt)_
 * Steins;Gate _(*.gxt)_
+* この世の果てで恋を唄う少女YU-NO _(*.gxt)_
 
 <sup>(1)</sup> Require [dr_dec decompression script by BlackDragonHunt](https://github.com/BlackDragonHunt/Danganronpa-Tools) for most files; some .btx files are _not_ GXT  
 <sup>(2)</sup> Packed in _*.ftx_ containers  
